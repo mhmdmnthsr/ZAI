@@ -9,17 +9,15 @@ router = APIRouter(prefix="/upload", tags=["upload"])
 @router.post("/")
 async def upload_pdf(file: UploadFile = File(...)):
     try:
-        # Save uploaded PDF to the pdfs folder
         if not os.path.exists(PDF_DIR):
             os.makedirs(PDF_DIR)
 
-        file_name = file.filename or "uploaded_file.pdf"  # Fallback filename if None
+        file_name = file.filename or "uploaded_file.pdf"  
         file_path = os.path.join(PDF_DIR, file_name)
 
         with open(file_path, "wb") as f:
             f.write(await file.read())
 
-        # Extract and store embeddings
         documents = load_and_split_pdfs([file_path])
         if not documents:
             raise HTTPException(status_code=400, detail="Failed to extract text from PDF.")

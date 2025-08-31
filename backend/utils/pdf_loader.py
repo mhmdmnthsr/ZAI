@@ -28,7 +28,7 @@ def load_and_split_pdfs(file_paths: Optional[List[str]] = None):
     """
     all_docs = []
 
-    if file_paths is None:  # Default to all PDFs in the folder
+    if file_paths is None:  
         if not os.path.isdir(PDF_DIR):
             print(f"⚠️ Folder '{PDF_DIR}' not found.")
             return all_docs
